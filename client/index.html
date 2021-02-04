@@ -35,15 +35,21 @@
               </div>
             <div class="form-floating mb-3">
               <input type="password" class="form-control" id="password" placeholder="Password">
-              <label for="floatingPassword">Password</label>
+
+             
+
+              <label for="password">Password</label>
+
             </div>
 
 
             <button type="submit" class="btn btn-outline-primary login" id="to-login">Login <span class="fa fa-user"></span></button>
-            <button type="submit" class="btn btn-outline-success login" id="to-register-form">Register <span class="fa fa-pencil"></span></button>
+
+              <button type="submit" class="btn btn-outline-success login" id="to-register-form">Register <span class="fa fa-pencil"></span></button>
   
-            <button type="submit" class="btn btn-outline-success register" id="to-register-done">Register <span class="fa fa-pencil"></span></button>
-            <button type="submit" class="btn btn-outline-danger register" id="to-login-form">Cancel <span class="fa fa-stop"></span></button>
+              <button type="submit" class="btn btn-outline-success register" id="to-register-done">Register <span class="fa fa-pencil"></span></button>
+              <button type="submit" class="btn btn-outline-danger register" id="to-login-form">Cancel <span class="fa fa-stop"></span></button>
+
 
           </form>
           <br>
@@ -52,7 +58,7 @@
               <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
           <!--End of Google Sign In Button-->  
-            
+          </div>  
         </div>
       </div>
     </div>
@@ -69,6 +75,19 @@
         </form>
       </div>
       <div class="container d-flex flex-wrap justify-content-evenly mb-3" id="songCard"></div>
+
+    </div>
+  <!--Weather-->
+  <div id="weather" class="container-fluid col-sm-3 float-left mt-5" id="widgetWeather">
+    <div class="card bg-dark text-white">
+        <img src="./widget.jpg" class="card-img" alt="...">
+        <div class="card-img-overlay">
+            <h5 class="card-title">Jakarta</h5>
+            <p class="card-text" id="mainWeather"></p>
+            <p class="card-text" id="descriptionWeather"></p>
+            <p class="card-text" id="tempWeather"></p>
+        </div>
+
     </div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script> 
