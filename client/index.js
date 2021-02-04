@@ -2,7 +2,7 @@ const baseUrl = "http://localhost:3000";
 
 $(document).ready(() => {
 	authenticate();
-
+});
 	$("#to-login").on("click", (e) => {
 		e.preventDefault();
 		login();
@@ -66,13 +66,14 @@ $(document).ready(() => {
 				encodeURIComponent($("#search").val(""));
 			});
 	});
-});
+
 
 function authenticate() {
 	if(!localStorage.getItem("accessToken")) {
 		$("#entering").show();
 		$(".register").hide();
 		$("#content").hide();
+		$("#weather").hide();
 	} else {
 		$("#entering").hide();
 		$("#content").show();
@@ -126,6 +127,26 @@ function register() {
 			$("#email").val("");
 			$("#password").val("");
 		});
+}
+function getWeather(){
+	$.ajax({
+	method: 'GET',
+	url: 'http://localhost:3000/weather',
+	headers: {
+		access_token: localStorage.access_token
+	}
+})
+	.done(data => {
+		$('#mainWeather').text(data[1].main)
+		$('#descriptionWeather').text(data[1].description)
+		$('#tempWeather').text(Math.round((data[0].temp-273)*10)/10 + "°C")
+	})
+	.fail(err => {
+		console.log(err, '<=== error')
+	})
+	.always(() => {
+		console.log('always')
+	})
 }
 
 function logout() {

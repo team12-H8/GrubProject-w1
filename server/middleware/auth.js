@@ -1,11 +1,12 @@
 const { User } = require('../models')
+const { verify } = require('../helpers/jsonwebtoken')
 
 async function authenticate (req, res, next) {
   const access_token = req.headers.access_token
   try {
     if (!access_token) {
-      res.status(400).json({
-        msg: 'Please login'
+      next({
+        name: 'authenticate'
       })
     } else {
       const email = verify(access_token).email
@@ -17,13 +18,13 @@ async function authenticate (req, res, next) {
         }
         next()
       } else {
-        res.status(400).json({
-          msg: 'Please login'
+        next({
+          msg: 'authenticate'
         })
       }
     }
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
