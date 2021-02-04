@@ -35,8 +35,6 @@ module.exports = (err, req, res, next) => {
     res.status(400).json({message})
   
   } else {
-    const msg = "Unhandle error, we're sorry"
-    message.push(msg)
-    res.status(500).json({message})
+    res.status(500).json(err)
   }
 }
