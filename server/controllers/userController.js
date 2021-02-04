@@ -3,7 +3,7 @@ const {comparePassword} = require('../helpers/bycrypt')
 const {generateToken} = require ('../helpers/jsonwebtoken')
 
 class UserController { 
-    static register (req,res,next) { 
+    static register ( req, res, next) { 
         const newUser = { 
             email : req.body.email, 
             password : req.body.password 
@@ -17,7 +17,7 @@ class UserController {
             res.status(201).json(returnedData)
         })
         .catch((err) => { 
-            res.status(500).json(err.message)
+            next(err)
         })
     } 
 
@@ -32,29 +32,25 @@ class UserController {
         .then((data) => { 
             if (data === null) { 
                 throw ({ 
-                    name : 'LoginError', 
-                    status : 400,
-                    msg : 'Invalid email or password' 
+                    name : 'LoginError'
                 })
             } else { 
                 const comparedPass = comparePassword(loggedUser.password,data.password) 
                 if (comparedPass === false) { 
                     throw ({ 
-                        name : 'LoginError', 
-                        status : 400,
-                        msg : 'Invalid email or password' 
-                      })
+                        name : 'LoginError'
+                    })
                 } else { 
                     const accesToken = generateToken({ 
                         id : data.id,
                         email : data.email
-                      }) 
+                    }) 
                       res.status(200).json({accesToken})
                 }
             }
         }) 
         .catch((err) => { 
-            res.send(err)
+            next(err)
         })
     }
 } 
