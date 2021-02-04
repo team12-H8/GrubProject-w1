@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/users/";
+const baseUrl = "http://localhost:3000";
 
 $(document).ready(() => {
 	authenticate();
@@ -19,9 +19,10 @@ $(document).ready(() => {
 		register();
 	});
 
-	$("#to-login-page").on("click", (e) => {
+	$("#to-login-form").on("click", (e) => {
 		e.preventDefault();
-		authenticate();
+		$(".login").show();
+		$(".register").hide();
 	});
 
 	$("#logoutBtn").on("click", (e) => {
@@ -29,7 +30,7 @@ $(document).ready(() => {
 		logout();
 	});
 
-	$("#searchBtn").click(function (e) {
+	$("#searchBtn").on('click',function (e) {
 		e.preventDefault();
 
 		let query = encodeURIComponent($("#search").val());
@@ -68,7 +69,7 @@ $(document).ready(() => {
 });
 
 function authenticate() {
-	if (!localStorage.getItem("accessToken")) {
+	if(!localStorage.getItem("accessToken")) {
 		$("#entering").show();
 		$(".register").hide();
 		$("#content").hide();
@@ -83,7 +84,7 @@ function login() {
 	const password = $("#password").val();
 	$.ajax({
 		method: "POST",
-		url: baseUrl + "login",
+		url: baseUrl + "/user/login",
 		data: {
 			email,
 			password,
@@ -107,14 +108,16 @@ function register() {
 	const password = $("#password").val();
 	$.ajax({
 		method: "POST",
-		url: baseUrl + "register",
+		url: baseUrl + "/user/register",
 		data: {
 			email,
 			password,
 		},
 	})
 		.done(() => {
+			$(".login").show();
 			authenticate();
+
 		})
 		.fail((xhr, text) => {
 			console.log(xhr, text);
