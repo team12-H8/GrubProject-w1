@@ -24,6 +24,11 @@ $(document).ready(() => {
 		authenticate();
 	});
 
+	$("#logoutBtn").on("click", (e) => {
+		e.preventDefault();
+		logout();
+	});
+
 	$("#searchBtn").click(function (e) {
 		e.preventDefault();
 
@@ -118,4 +123,9 @@ function register() {
 			$("#email").val("");
 			$("#password").val("");
 		});
+}
+
+function logout() {
+	localStorage.clear();
+	authenticate();
 }

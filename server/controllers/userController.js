@@ -45,11 +45,11 @@ class UserController {
                         msg : 'Invalid email or password' 
                       })
                 } else { 
-                    const accesToken = generateToken({ 
+                    const accessToken = generateToken({ 
                         id : data.id,
                         email : data.email
                       }) 
-                      res.status(200).json({accesToken})
+                      res.status(200).json({accessToken})
                 }
             }
         }) 
