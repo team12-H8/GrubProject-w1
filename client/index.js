@@ -1,8 +1,8 @@
 const baseUrl = "http://localhost:3000";
 
-$(document).ready(() => {
+$(function () {
 	authenticate();
-});
+
 	$("#to-login").on("click", (e) => {
 		e.preventDefault();
 		login();
@@ -66,7 +66,7 @@ $(document).ready(() => {
 				encodeURIComponent($("#search").val(""));
 			});
 	});
-
+});
 
 function authenticate() {
 	if(!localStorage.getItem("accessToken")) {

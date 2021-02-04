@@ -56,17 +56,50 @@ class UserController {
     } 
 
     static googleLogin(req,res) { 
+        let newMail 
+        let newPass
         const client = new OAuth2Client(process.env.CLIENT_ID) 
         client.verifyIdToken({
             idToken : req.body.googleToken, 
             audience : process.env.CLIENT_ID
         }) 
         .then((ticket) => { 
-            const payload = ticket.getPayload 
-            console.log(payload)
+            const payload = ticket.getPayload() 
+            newMail = payload.email 
+            newPass = process.env.GOOGLE_PASS 
+            //console.log(newMail)
+            //console.log(newPass)
+            return User.findOne({ 
+                where : { 
+                    email : newMail
+                } 
+            })
+        })  
+        .then((user) => {  
+            //console.log(user,'<<<< ini di user')
+            if (user) { 
+                const token = generateToken({ 
+                    id : user.id,
+                    email : user.email
+                }) 
+                res.status(201).json({"acces_token":token})
+            } else { 
+              return User.create({ 
+                  email : newMail, 
+                  password : newPass
+              }) 
+            }
         }) 
+        .then((registeredUser) => { 
+            //console.log(registeredUser, 'ini registeredUser')
+            const token = generateToken({ 
+                id : registeredUser.id,
+                email : registeredUser.email
+            }) 
+            res.status(201).json({"acces_token":token})
+        })
         .catch((err) => { 
-            console.log(err)
+            res.send(err)
         })
     }
 } 
