@@ -13,5 +13,5 @@ app.use(express.urlencoded({ extended:true }))
 app.use(router)
 
 app.listen(port, () => {
-  console.log(`connect on http://localhost${port}`)
+  console.log(`connect on http://localhost:${port}`)
 })

@@ -55,12 +55,16 @@ body {
   margin-bottom: 5%;
 }
 
-.login {
+/* .login {
   display: inline;
-  /* display: none; */
+  display: none;
 }
 
 .register {
-  /* display: inline; */
+  display: inline;
   display: none;
 }
+
+#entering {
+  display: none
+} */

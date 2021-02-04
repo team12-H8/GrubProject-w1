@@ -1,6 +1,7 @@
 const {User} = require('../models')
 const {comparePassword} = require('../helpers/bycrypt') 
 const {generateToken} = require ('../helpers/jsonwebtoken')
+const {OAuth2Client} = require('google-auth-library')
 
 class UserController { 
     static register ( req, res, next) { 
@@ -41,16 +42,31 @@ class UserController {
                         name : 'LoginError'
                     })
                 } else { 
-                    const accesToken = generateToken({ 
+                    const accessToken = generateToken({ 
                         id : data.id,
                         email : data.email
-                    }) 
-                      res.status(200).json({accesToken})
+                      }) 
+                      res.status(200).json({accessToken})
                 }
             }
         }) 
         .catch((err) => { 
             next(err)
+        })
+    } 
+
+    static googleLogin(req,res) { 
+        const client = new OAuth2Client(process.env.CLIENT_ID) 
+        client.verifyIdToken({
+            idToken : req.body.googleToken, 
+            audience : process.env.CLIENT_ID
+        }) 
+        .then((ticket) => { 
+            const payload = ticket.getPayload 
+            console.log(payload)
+        }) 
+        .catch((err) => { 
+            console.log(err)
         })
     }
 } 
