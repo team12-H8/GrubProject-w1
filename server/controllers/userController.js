@@ -1,7 +1,7 @@
 const {User} = require('../models')
 const {comparePassword} = require('../helpers/bycrypt') 
 const {generateToken} = require ('../helpers/jsonwebtoken')
-// const {OAuth2Client} = require('google-auth-library')
+const {OAuth2Client} = require('google-auth-library')
 
 class UserController { 
     static register ( req, res, next) { 
@@ -93,13 +93,12 @@ class UserController {
         .then((registeredUser) => { 
             //console.log(registeredUser, 'ini registeredUser')
             const token = generateToken({ 
-                id : registeredUser.id,
                 email : registeredUser.email
             }) 
             res.status(201).json({"acces_token":token})
         })
         .catch((err) => { 
-            res.send(err)
+            console.log(err)
         })
     }
 } 
