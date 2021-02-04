@@ -78,11 +78,7 @@ class UserController {
         .then((user) => {  
             //console.log(user,'<<<< ini di user')
             if (user) { 
-                const token = generateToken({ 
-                    id : user.id,
-                    email : user.email
-                }) 
-                res.status(201).json({"acces_token":token})
+                return user
             } else { 
               return User.create({ 
                   email : newMail, 
