@@ -3,10 +3,11 @@ const { verify } = require('../helpers/jsonwebtoken')
 
 async function authenticate (req, res, next) {
   const accessToken = req.headers.accesstoken
+ 
   try {
     if (!accessToken) {
       next({
-        name: 'authenticate'
+        name: 'authenticate'  
       })
     } else {
       const email = verify(accessToken).email
