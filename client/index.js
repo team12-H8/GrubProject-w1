@@ -38,6 +38,9 @@ $(function () {
 		$.ajax({
 			method: "GET",
 			url: `${baseUrl}/song/search?q=${query}`,
+			headers: {
+				accessToken: localStorage.accessToken
+			}
 		})
 			.done(function (response) {
 				$("#songCard").empty();
@@ -74,10 +77,15 @@ function authenticate() {
 		$("#entering").show();
 		$(".register").hide();
 		$("#content").hide();
+		$("#coronaNews").hide();
+		$("#weather").hide();
 	} else {
 		$("#entering").hide();
 		$("#content").show();
+		$("#coronaNews").show();
+		$("#weather").show();
 		coronaNews()
+		getWeather()
 	}
 }
 
@@ -138,4 +146,35 @@ function logout() {
       console.log('User signed out.');
     })
 	authenticate();
+}
+
+function getWeather() {
+	$.ajax({
+		method: "get",
+		url: baseUrl + "/weather",
+		headers: {
+			accessToken: localStorage.accessToken
+		}
+	})
+	.done(response => {
+		$('#mainWeather').text(response[1].main)
+
+		if (response[1].main == 'Haze') {
+			$("#imageWeather").attr("src","./assetsWeather/haze.jpg");
+		} else if (response[1].main == 'Rain') {
+			$("#imageWeather").attr("src","./assetsWeather/rain.jpg");
+		} else if (response[1].main == 'Cloud') {
+			$("#imageWeather").attr("src","./assetsWeather/cloudy.jpg");
+		} else if (response[1].main == 'Clear') {
+			$("#imageWeather").attr("src","./assetsWeather/cerah.jpg");
+		}
+
+    $('#tempWeather').text(Math.round((response[0].temp-273)*10)/10 + "°C")
+  })
+  .fail(err => {
+    console.log(err, '<=== error')
+  })
+  .always(() => {
+    console.log('always')
+  })
 }

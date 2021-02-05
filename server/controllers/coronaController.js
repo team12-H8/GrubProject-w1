@@ -18,7 +18,7 @@ class controller {
         res.status(200).json(response.data);
       })
       .catch(function (error) {
-        res.status(500).json("Internal server error");
+        res.status(500).json(error);
       });
   }
 }

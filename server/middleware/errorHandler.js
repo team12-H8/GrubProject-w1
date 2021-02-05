@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next) => {
-  // console.log(err.name, '<<<<<<< dari error handler')
+  console.log(err, '<<<<<<< dari error handler')
   let message = []
   if (err.name == "SequelizeValidationError") {
     const errors = err.errors.map((el) => el.message)
