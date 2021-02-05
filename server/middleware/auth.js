@@ -2,14 +2,14 @@ const { User } = require('../models')
 const { verify } = require('../helpers/jsonwebtoken')
 
 async function authenticate (req, res, next) {
-  const access_token = req.headers.access_token
+  const accessToken = req.headers.accesstoken
   try {
-    if (!access_token) {
+    if (!accessToken) {
       next({
         name: 'authenticate'
       })
     } else {
-      const email = verify(access_token).email
+      const email = verify(accessToken).email
       const find = await User.findOne({ where: { email }})
       if (find) {
         req.user = {

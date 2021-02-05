@@ -13,7 +13,10 @@
   margin: 0;
   padding: 0;
 }
-
+img {
+  width: 100px;
+  height: 120px;
+}
 body {
   background-image: url("./background.png");
   font-family:
@@ -24,7 +27,7 @@ body {
     sans-serif;
 }
 
-.container {
+#entering .container {
   margin-top: 10%
 }
 
@@ -70,8 +73,9 @@ body {
 } */
 
 #coronaNews{
-  background-color: aliceblue;
-  padding: 20px;
+  background-color: rgb(172, 228, 206);
+  padding: 10px;
+  height: 80px;
 }
 .headline{
  text-align: center;
