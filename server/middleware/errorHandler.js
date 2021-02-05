@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next) => {
-  console.log(err, '<<<<<<< dari error handler')
+  // console.log(err.name, '<<<<<<< dari error handler')
   let message = []
   if (err.name == "SequelizeValidationError") {
     const errors = err.errors.map((el) => el.message)
@@ -10,7 +10,7 @@ module.exports = (err, req, res, next) => {
     res.status(400).json({ message: errors})
   
   } else if (err.name == "SequelizeDatabaseError") {
-    const msg = ' '
+    const msg = 'Email is required'
     message.push(msg)
     res.status(400).json({message})
   
@@ -32,7 +32,7 @@ module.exports = (err, req, res, next) => {
   } else if (err.name == "NotFound") {
     const msg = "We're sorry, song not found"
     message.push(msg)
-    res.status(404).json({message})
+    res.status(400).json({message})
   
   } else {
     res.status(500).json(err)
