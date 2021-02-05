@@ -53,53 +53,38 @@ class UserController {
         .catch((err) => { 
             next(err)
         })
-    } 
-
-    static googleLogin(req,res) { 
-        let newMail 
-        let newPass
-        const client = new OAuth2Client(process.env.CLIENT_ID) 
-        client.verifyIdToken({
-            idToken : req.body.googleToken, 
-            audience : process.env.CLIENT_ID
-        }) 
-        .then((ticket) => { 
-            const payload = ticket.getPayload() 
-            newMail = payload.email 
-            newPass = process.env.GOOGLE_PASS 
-            //console.log(newMail)
-            //console.log(newPass)
-            return User.findOne({ 
-                where : { 
-                    email : newMail
-                } 
+    }
+    static async googleLogin (req, res) {
+        try {
+            let newMail
+            let newPass
+            const client = new OAuth2Client(process.env.CLIENT_ID) 
+            const ticket = await client.verifyIdToken({
+                idToken: req.body.googleToken,
+                audience: process.env.CLIENT_ID
             })
-        })  
-        .then((user) => {  
-            //console.log(user,'<<<< ini di user')
-            if (user) { 
-                const token = generateToken({ 
-                    id : user.id,
-                    email : user.email
-                }) 
-                res.status(201).json({"acces_token":token})
-            } else { 
-              return User.create({ 
-                  email : newMail, 
-                  password : newPass
-              }) 
+            const payload = ticket.getPayload()
+            newMail = payload.email
+            newPass = process.env.GOOGLE_PASS
+            const find = await User.findOne({where: { email: newMail }})
+            if (!find) {
+                const create = await User.create({
+                    email: newMail,
+                    password: process.env.GOOGLE_PASS
+                })
+                const acces_token = generateToken(create)
+                res.status(201).json({ acces_token })
+            } else {
+                const payload = {
+                    id: find.id,
+                    email: find.email
+                }
+                const acces_token = generateToken(payload)
+                res.status(200).json({ acces_token })
             }
-        }) 
-        .then((registeredUser) => { 
-            //console.log(registeredUser, 'ini registeredUser')
-            const token = generateToken({ 
-                email : registeredUser.email
-            }) 
-            res.status(201).json({"acces_token":token})
-        })
-        .catch((err) => { 
+        } catch (err) {
             console.log(err)
-        })
+        }
     }
 } 
 
