@@ -77,6 +77,7 @@ function authenticate() {
 	} else {
 		$("#entering").hide();
 		$("#content").show();
+		coronaNews()
 	}
 }
 

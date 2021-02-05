@@ -68,3 +68,11 @@ body {
 #entering {
   display: none
 } */
+
+#coronaNews{
+  background-color: aliceblue;
+  padding: 20px;
+}
+.headline{
+ text-align: center;
+}
