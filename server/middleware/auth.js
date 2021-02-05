@@ -2,11 +2,11 @@ const { User } = require('../models')
 const { verify } = require('../helpers/jsonwebtoken')
 
 async function authenticate (req, res, next) {
-  const access_token = req.headers.access_token
+  const access_token = req.headers.accesstoken
   try {
     if (!access_token) {
       next({
-        name: 'authenticate'
+        name: 'authenticate'  
       })
     } else {
       const email = verify(access_token).email

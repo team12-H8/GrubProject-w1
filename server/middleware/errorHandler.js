@@ -10,7 +10,7 @@ module.exports = (err, req, res, next) => {
     res.status(400).json({ message: errors})
   
   } else if (err.name == "SequelizeDatabaseError") {
-    const msg = 'Email is required'
+    const msg = ' '
     message.push(msg)
     res.status(400).json({message})
   
@@ -32,7 +32,7 @@ module.exports = (err, req, res, next) => {
   } else if (err.name == "NotFound") {
     const msg = "We're sorry, song not found"
     message.push(msg)
-    res.status(400).json({message})
+    res.status(404).json({message})
   
   } else {
     res.status(500).json(err)

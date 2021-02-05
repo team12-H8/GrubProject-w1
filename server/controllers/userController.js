@@ -54,7 +54,8 @@ class UserController {
             next(err)
         })
     }
-    static async googleLogin (req, res) {
+    
+    static async googleLogin (req, res, next) {
         try {
             let newMail
             let newPass
@@ -83,7 +84,7 @@ class UserController {
                 res.status(200).json({ acces_token })
             }
         } catch (err) {
-            console.log(err)
+          next(err)
         }
     }
 } 
